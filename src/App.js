@@ -2,14 +2,40 @@ import React from "react";
 import "./App.css";
 import closeButton from "./images/Close_Icon.png";
 import Header from "./components/Header/Header";
-import { Main, PopupWithForm } from "./components/Main/Main";
+import { Main, PopupWithForm, ImagePopup } from "./components/Main/Main";
 import Footer from "./components/Footer/Footer";
+import api from "../src/utils/api";
+
 function App() {
+  const [userData, setUserData] = React.useState("");
+  const [card, setInitialCards] = React.useState([]);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
+  React.useEffect(() => {
+    api
+      .getUserInfo()
+      .then((data) => {
+        setUserData(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((data) => {
+        setInitialCards(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [card]);
+  const [selectedCard, setSelectedCard] = React.useState(null);
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
   };
@@ -22,11 +48,16 @@ function App() {
     setIsEditAvatarPopupOpen(true);
   };
 
+  const handleClick = (card) => {
+    setSelectedCard(card);
+  };
+
   // Manipulador de evento para fechar os pop-ups
   const handlePopupClose = () => {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setSelectedCard(false);
   };
   return (
     <div className="App">
@@ -36,6 +67,9 @@ function App() {
           onEditProfileClick={handleEditProfileClick}
           onAddPlaceClick={handleAddPlaceClick}
           onEditAvatarClick={handleEditAvatarClick}
+          onCardClick={handleClick}
+          userData={userData}
+          cards={card}
         />
         <Footer />
         <PopupWithForm
@@ -68,24 +102,7 @@ function App() {
           <span className="popup__aboutMe-insert-error"></span>
         </PopupWithForm>
 
-        {/* <PopupWithForm
-          name="popup__image-container"
-          title=""
-          isOpen={"popup__image-container"}
-          onClose={handlePopupClose}
-        >
-          <img src="#" alt="#" className="popup__image-zoom" />
-
-          <span className="popup__image-close-button popup__close-button">
-            <img
-              src={closeButton}
-              className="popup__image-close-image"
-              alt="close image"
-            />
-          </span>
-
-          <span className="popup__image-title"></span>
-        </PopupWithForm> */}
+        <ImagePopup card={selectedCard} onClose={handlePopupClose}></ImagePopup>
 
         <PopupWithForm
           name="add-popup__container"

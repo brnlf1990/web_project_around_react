@@ -11,7 +11,6 @@ import bucketButton from "../../images/trash.png";
 import closeButton from "../../images/Close_Icon.png";
 
 function PopupWithForm({ name, title, isOpen, onClose, children }) {
-  console.log(name);
   return (
     <div className={"popup"}>
       <div className={`popup__image-fade ${isOpen ? "active" : ""}`}></div>
@@ -22,7 +21,8 @@ function PopupWithForm({ name, title, isOpen, onClose, children }) {
         <h2 className="popup__title">{title}</h2>
         <form className="popup__form">
           {children}
-          <button type="submit" className="popup__submit-button">
+
+          <button className="popup__submit-button" type="submit">
             Salvar
           </button>
         </form>
@@ -30,15 +30,45 @@ function PopupWithForm({ name, title, isOpen, onClose, children }) {
     </div>
   );
 }
-
-function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatarClick }) {
+function ImagePopup({ card, onClose }) {
+  return (
+    <div className="popup__image">
+      <div className="popup__image-fade"></div>
+      <div
+        className={`popup popup__image-container ${
+          card ? "popup__opened" : ""
+        }`}
+      >
+        {card && (
+          <img src={card.link} alt={card.name} className="popup__image-zoom" />
+        )}
+        <span className="popup__close-button" onClick={onClose}>
+          <img
+            src={closeButton}
+            className="popup__image-close-image"
+            alt="close image"
+          />
+        </span>
+        <p className="popup__image-title">{card ? card.name : ""}</p>
+      </div>
+    </div>
+  );
+}
+function Main({
+  onEditProfileClick,
+  onAddPlaceClick,
+  onEditAvatarClick,
+  onCardClick,
+  userData,
+  cards,
+}) {
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__container">
           <div className="profile__avatar">
             <img
-              src="#"
+              src={userData.avatar}
               alt="profile image"
               className="profile__avatar-image"
               onClick={onEditAvatarClick}
@@ -46,11 +76,13 @@ function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatarClick }) {
           </div>
 
           <div className="profile__info">
-            <h2 className="profile__info-name" id="profile__info_name"></h2>
-            <h3
-              className="profile__info-content"
-              id="profile__info_content"
-            ></h3>
+            <h2 className="profile__info-name" id="profile__info_name">
+              {userData.name}
+            </h2>
+            <h3 className="profile__info-content" id="profile__info_content">
+              {" "}
+              {userData.about}
+            </h3>
           </div>
           <button
             className="profile__info-edit-button"
@@ -73,22 +105,31 @@ function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatarClick }) {
         </div>
       </section>
       <section className="templates">
-        <div className="templates__cards-container">
-          <div className="templates__card">
-            <img alt="card images" className="templates-card__image" />
+        {cards.map((card) => (
+          <div
+            className="templates__card"
+            key={card._id}
+            onClick={() => onCardClick(card)}
+          >
+            <img
+              alt="card images"
+              className="templates-card__image"
+              src={card.link}
+              onClick={onCardClick}
+            />
             <button className="templates__card_remove-button">
               <img src={bucketButton} alt="trash bucket image" />
             </button>
             <div className="templates__card__description-container">
-              <h2 className="templates__card__description"></h2>
+              <h2 className="templates__card__description">{card.name}</h2>
               <button className="templates__card-button"></button>
-              <p className="templates__card-likes-count"></p>
+              <p className="templates__card-likes-count">{card.likes.length}</p>
             </div>
           </div>
-        </div>
+        ))}
       </section>
     </main>
   );
 }
 
-export { Main, PopupWithForm };
+export { Main, PopupWithForm, ImagePopup };
