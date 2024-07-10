@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import closeButton from "./images/Close_Icon.png";
 import Header from "./components/Header/Header";
 import { Main, PopupWithForm, ImagePopup } from "./components/Main/Main";
 import Footer from "./components/Footer/Footer";
@@ -48,7 +47,7 @@ function App() {
     setIsEditAvatarPopupOpen(true);
   };
 
-  const handleClick = (card) => {
+  const handleCardClick = (card) => {
     setSelectedCard(card);
   };
 
@@ -67,7 +66,7 @@ function App() {
           onEditProfileClick={handleEditProfileClick}
           onAddPlaceClick={handleAddPlaceClick}
           onEditAvatarClick={handleEditAvatarClick}
-          onCardClick={handleClick}
+          onCardClick={handleCardClick}
           userData={userData}
           cards={card}
         />

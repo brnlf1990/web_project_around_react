@@ -1,14 +1,15 @@
 import React from "react";
-import "./Cards.css";
 import "./Profile.css";
+import "./Cards.css";
+
 import "./Popup.css";
 import "./PopupCardDelete.css";
 import "./PopupPhotoUpdate.css";
 import "./Add-popup.css";
 import profileEditButton from "../../images/avatarPencil.png";
 import cardAddButton from "../../images/add__button_icon.jpg";
-import bucketButton from "../../images/trash.png";
 import closeButton from "../../images/Close_Icon.png";
+import Card from "./Card";
 
 function PopupWithForm({ name, title, isOpen, onClose, children }) {
   return (
@@ -30,6 +31,7 @@ function PopupWithForm({ name, title, isOpen, onClose, children }) {
     </div>
   );
 }
+
 function ImagePopup({ card, onClose }) {
   return (
     <div className="popup__image">
@@ -54,33 +56,34 @@ function ImagePopup({ card, onClose }) {
     </div>
   );
 }
-function Main({
-  onEditProfileClick,
-  onAddPlaceClick,
-  onEditAvatarClick,
-  onCardClick,
-  userData,
-  cards,
-}) {
+
+function Main(
+  {
+    onEditProfileClick,
+    onAddPlaceClick,
+    onEditAvatarClick,
+
+    userData,
+    cards,
+  },
+  props
+) {
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__container">
-          <div className="profile__avatar">
+          <div className="profile__avatar" onClick={onEditAvatarClick}>
             <img
               src={userData.avatar}
               alt="profile image"
               className="profile__avatar-image"
-              onClick={onEditAvatarClick}
             />
           </div>
-
           <div className="profile__info">
             <h2 className="profile__info-name" id="profile__info_name">
               {userData.name}
             </h2>
             <h3 className="profile__info-content" id="profile__info_content">
-              {" "}
               {userData.about}
             </h3>
           </div>
@@ -94,7 +97,6 @@ function Main({
               className="profile__info-edit-button-image"
             />
           </button>
-
           <button className="profile__add-button" onClick={onAddPlaceClick}>
             <img
               src={cardAddButton}
@@ -106,26 +108,7 @@ function Main({
       </section>
       <section className="templates">
         {cards.map((card) => (
-          <div
-            className="templates__card"
-            key={card._id}
-            onClick={() => onCardClick(card)}
-          >
-            <img
-              alt="card images"
-              className="templates-card__image"
-              src={card.link}
-              onClick={onCardClick}
-            />
-            <button className="templates__card_remove-button">
-              <img src={bucketButton} alt="trash bucket image" />
-            </button>
-            <div className="templates__card__description-container">
-              <h2 className="templates__card__description">{card.name}</h2>
-              <button className="templates__card-button"></button>
-              <p className="templates__card-likes-count">{card.likes.length}</p>
-            </div>
-          </div>
+          <Card key={card.id} card={card} onCardClick={props.onCardClick} />
         ))}
       </section>
     </main>
