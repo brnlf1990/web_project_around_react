@@ -1,10 +1,11 @@
 import React from "react";
 import "./App.css";
 import Header from "./components/Header/Header";
-import { Main, PopupWithForm, ImagePopup } from "./components/Main/Main";
+import Main from "./components/Main/Main";
 import Footer from "./components/Footer/Footer";
 import api from "../src/utils/api";
-
+import PopupWithForm from "./components/Main/PopupWithForm";
+import ImagePopup from "./components/Main/ImagePopup";
 function App() {
   const [userData, setUserData] = React.useState("");
   const [card, setInitialCards] = React.useState([]);

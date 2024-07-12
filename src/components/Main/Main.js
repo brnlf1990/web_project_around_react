@@ -1,73 +1,20 @@
 import React from "react";
 import "./Profile.css";
 import "./Cards.css";
-
-import "./Popup.css";
-import "./PopupCardDelete.css";
-import "./PopupPhotoUpdate.css";
-import "./Add-popup.css";
+import PopupWithForm from "./PopupWithForm";
 import profileEditButton from "../../images/avatarPencil.png";
 import cardAddButton from "../../images/add__button_icon.jpg";
 import closeButton from "../../images/Close_Icon.png";
 import Card from "./Card";
 
-function PopupWithForm({ name, title, isOpen, onClose, children }) {
-  return (
-    <div className={"popup"}>
-      <div className={`popup__image-fade ${isOpen ? "active" : ""}`}></div>
-      <div className={`popup ${name} ${isOpen ? "popup__opened" : ""}`}>
-        <span className="popup__close-button" onClick={onClose}>
-          <img src={closeButton} className="popup__close-image" alt="close" />
-        </span>
-        <h2 className="popup__title">{title}</h2>
-        <form className="popup__form">
-          {children}
-
-          <button className="popup__submit-button" type="submit">
-            Salvar
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-}
-
-function ImagePopup({ card, onClose }) {
-  return (
-    <div className="popup__image">
-      <div className="popup__image-fade"></div>
-      <div
-        className={`popup popup__image-container ${
-          card ? "popup__opened" : ""
-        }`}
-      >
-        {card && (
-          <img src={card.link} alt={card.name} className="popup__image-zoom" />
-        )}
-        <span className="popup__close-button" onClick={onClose}>
-          <img
-            src={closeButton}
-            className="popup__image-close-image"
-            alt="close image"
-          />
-        </span>
-        <p className="popup__image-title">{card ? card.name : ""}</p>
-      </div>
-    </div>
-  );
-}
-
-function Main(
-  {
-    onEditProfileClick,
-    onAddPlaceClick,
-    onEditAvatarClick,
-
-    userData,
-    cards,
-  },
-  props
-) {
+function Main({
+  onEditProfileClick,
+  onAddPlaceClick,
+  onEditAvatarClick,
+  onCardClick,
+  userData,
+  cards,
+}) {
   return (
     <main className="content">
       <section className="profile">
@@ -107,12 +54,12 @@ function Main(
         </div>
       </section>
       <section className="templates">
-        {cards.map((card) => (
-          <Card key={card.id} card={card} onCardClick={props.onCardClick} />
+        {cards.map((card, index) => (
+          <Card key={index} card={card} onCardClick={() => onCardClick(card)} />
         ))}
       </section>
     </main>
   );
 }
 
-export { Main, PopupWithForm, ImagePopup };
+export default Main;
