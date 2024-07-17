@@ -5,10 +5,7 @@ import PopupWithForm from "./PopupWithForm";
 import profileEditButton from "../../images/avatarPencil.png";
 import cardAddButton from "../../images/add__button_icon.jpg";
 import Card from "./Card";
-import {
-  CurrentUserContext,
-  getUserInfoApi,
-} from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Main({
   onEditProfileClick,
@@ -19,24 +16,23 @@ function Main({
   cards,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-  console.log(getUserInfoApi);
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__container">
           <div className="profile__avatar" onClick={onEditAvatarClick}>
             <img
-              src={avatar}
+              src={currentUser.avatar}
               alt="profile image"
               className="profile__avatar-image"
             />
           </div>
           <div className="profile__info">
             <h2 className="profile__info-name" id="profile__info_name">
-              {name}
+              {currentUser.name}
             </h2>
             <h3 className="profile__info-content" id="profile__info_content">
-              {about}
+              {currentUser.about}
             </h3>
           </div>
           <button
