@@ -4,34 +4,39 @@ import "./Cards.css";
 import PopupWithForm from "./PopupWithForm";
 import profileEditButton from "../../images/avatarPencil.png";
 import cardAddButton from "../../images/add__button_icon.jpg";
-import closeButton from "../../images/Close_Icon.png";
 import Card from "./Card";
+import {
+  CurrentUserContext,
+  getUserInfoApi,
+} from "../../contexts/CurrentUserContext";
 
 function Main({
   onEditProfileClick,
   onAddPlaceClick,
   onEditAvatarClick,
   onCardClick,
-  userData,
+
   cards,
 }) {
+  const currentUser = React.useContext(CurrentUserContext);
+  console.log(getUserInfoApi);
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__container">
           <div className="profile__avatar" onClick={onEditAvatarClick}>
             <img
-              src={userData.avatar}
+              src={avatar}
               alt="profile image"
               className="profile__avatar-image"
             />
           </div>
           <div className="profile__info">
             <h2 className="profile__info-name" id="profile__info_name">
-              {userData.name}
+              {name}
             </h2>
             <h3 className="profile__info-content" id="profile__info_content">
-              {userData.about}
+              {about}
             </h3>
           </div>
           <button
