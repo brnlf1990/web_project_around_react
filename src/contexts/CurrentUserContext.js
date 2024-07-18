@@ -16,12 +16,11 @@ export const CurrentUserProvider = ({ children }) => {
         console.error(err);
       });
   }, []);
-
   const memoHook = React.useMemo(
     () => ({ currentUser, setCurrentUser }),
     [currentUser, setCurrentUser]
   );
-
+  console.log(currentUser);
   return (
     <CurrentUserContext.Provider value={memoHook}>
       {children}

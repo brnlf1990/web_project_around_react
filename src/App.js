@@ -7,25 +7,15 @@ import api from "../src/utils/api";
 import PopupWithForm from "./components/Main/PopupWithForm";
 import ImagePopup from "./components/Main/ImagePopup";
 import { CurrentUserProvider } from "./contexts/CurrentUserContext";
+import { CardRenderProvider } from "./contexts/CardContextRender";
 
 function App() {
-  const [card, setInitialCards] = React.useState([]);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
 
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {
-        setInitialCards(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [card]);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
@@ -52,105 +42,106 @@ function App() {
   };
   return (
     <CurrentUserProvider>
-      <div className="App">
-        <div className="page">
-          <Header />
-          <Main
-            onEditProfileClick={handleEditProfileClick}
-            onAddPlaceClick={handleAddPlaceClick}
-            onEditAvatarClick={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            cards={card}
-          />
-          <Footer />
-          <PopupWithForm
-            name="popup__container"
-            title="Editar perfil"
-            isOpen={isEditProfilePopupOpen}
-            onClose={handlePopupClose}
-          >
-            <input
-              type="text"
-              name="name"
-              placeholder="Nome"
-              className="popup__form-input"
-              id="popup__name-insert"
-              minLength="2"
-              maxLength="40"
-              required
+      <CardRenderProvider>
+        <div className="App">
+          <div className="page">
+            <Header />
+            <Main
+              onEditProfileClick={handleEditProfileClick}
+              onAddPlaceClick={handleAddPlaceClick}
+              onEditAvatarClick={handleEditAvatarClick}
+              onCardClick={handleCardClick}
             />
-            <span className="popup__name-insert-error"></span>
-            <input
-              type="text"
-              name="about"
-              placeholder="Sobre mim"
-              className="popup__form-input"
-              id="popup__aboutMe-insert"
-              minLength="2"
-              maxLength="200"
-              required
-            />
-            <span className="popup__aboutMe-insert-error"></span>
-          </PopupWithForm>
+            <Footer />
+            <PopupWithForm
+              name="popup__container"
+              title="Editar perfil"
+              isOpen={isEditProfilePopupOpen}
+              onClose={handlePopupClose}
+            >
+              <input
+                type="text"
+                name="name"
+                placeholder="Nome"
+                className="popup__form-input"
+                id="popup__name-insert"
+                minLength="2"
+                maxLength="40"
+                required
+              />
+              <span className="popup__name-insert-error"></span>
+              <input
+                type="text"
+                name="about"
+                placeholder="Sobre mim"
+                className="popup__form-input"
+                id="popup__aboutMe-insert"
+                minLength="2"
+                maxLength="200"
+                required
+              />
+              <span className="popup__aboutMe-insert-error"></span>
+            </PopupWithForm>
 
-          <ImagePopup
-            card={selectedCard}
-            onClose={handlePopupClose}
-          ></ImagePopup>
+            <ImagePopup
+              card={selectedCard}
+              onClose={handlePopupClose}
+            ></ImagePopup>
 
-          <PopupWithForm
-            name="add-popup__container"
-            title="Novo local"
-            isOpen={isAddPlacePopupOpen}
-            onClose={handlePopupClose}
-          >
-            <input
-              type="text"
-              name="title"
-              placeholder="Título"
-              className="popup__form-input add-popup__form-input"
-              id="popup__card-title-insert"
-              minLength="2"
-              maxLength="30"
-              required
-            />
-            <span className="popup__card-title-insert-error"></span>
-            <input
-              type="url"
-              name="image"
-              placeholder="Link da imagem"
-              className="popup__form-input add-popup__form-input"
-              id="popup__link-insert"
-              required
-            />
-            <span className="popup__link-insert-error"></span>
-          </PopupWithForm>
+            <PopupWithForm
+              name="add-popup__container"
+              title="Novo local"
+              isOpen={isAddPlacePopupOpen}
+              onClose={handlePopupClose}
+            >
+              <input
+                type="text"
+                name="title"
+                placeholder="Título"
+                className="popup__form-input add-popup__form-input"
+                id="popup__card-title-insert"
+                minLength="2"
+                maxLength="30"
+                required
+              />
+              <span className="popup__card-title-insert-error"></span>
+              <input
+                type="url"
+                name="image"
+                placeholder="Link da imagem"
+                className="popup__form-input add-popup__form-input"
+                id="popup__link-insert"
+                required
+              />
+              <span className="popup__link-insert-error"></span>
+            </PopupWithForm>
 
-          <PopupWithForm
-            name="photo-update-popup__container"
-            title="Alterar a foto do perfil"
-            isOpen={isEditAvatarPopupOpen}
-            onClose={handlePopupClose}
-          >
-            <input
-              type="url"
-              name="image"
-              placeholder="Link da imagem"
-              className="popup__form-input photo-update-popup__form-input"
-              id="popup__link-photo"
-              required
-            />
-            <span className="popup__link-photo-error"></span>
-          </PopupWithForm>
+            <PopupWithForm
+              name="photo-update-popup__container"
+              title="Alterar a foto do perfil"
+              isOpen={isEditAvatarPopupOpen}
+              onClose={handlePopupClose}
+            >
+              <input
+                type="url"
+                name="image"
+                placeholder="Link da imagem"
+                className="popup__form-input photo-update-popup__form-input"
+                id="popup__link-photo"
+                required
+              />
+              <span className="popup__link-photo-error"></span>
+            </PopupWithForm>
 
-          {/* <PopupWithForm
+            {/* <PopupWithForm
           name="card-delete"
           title="Tem certeza?"
           isOpen={"card-delete"}
           onClose={handlePopupClose}
         ></PopupWithForm> */}
+          </div>
         </div>
-      </div>
+      </CardRenderProvider>
     </CurrentUserProvider>
   );
 }

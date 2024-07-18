@@ -6,16 +6,15 @@ import profileEditButton from "../../images/avatarPencil.png";
 import cardAddButton from "../../images/add__button_icon.jpg";
 import Card from "./Card";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-
+import { CardContextRender } from "../../contexts/CardContextRender";
 function Main({
   onEditProfileClick,
   onAddPlaceClick,
   onEditAvatarClick,
   onCardClick,
-
-  cards,
 }) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const { currentUser } = React.useContext(CurrentUserContext);
+  const { cards } = React.useContext(CardContextRender);
   return (
     <main className="content">
       <section className="profile">

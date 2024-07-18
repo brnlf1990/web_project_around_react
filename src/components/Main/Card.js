@@ -1,14 +1,14 @@
 import React from "react";
 import "./Cards.css";
 import bucketButton from "../../images/trash.png";
+import { CardContextRender } from "../../contexts/CardContextRender";
 
 function Card({ card, onCardClick }) {
+  const cardContextRender = React.useContext(CardContextRender);
   const likesCount = card && card.likes ? card.likes.length : 0;
-
-  const handleClick = (card) => {
+  const handleClick = () => {
     onCardClick(card);
   };
-
   return (
     <div className="templates__card">
       <img
