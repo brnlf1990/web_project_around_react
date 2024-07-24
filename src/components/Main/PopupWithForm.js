@@ -6,7 +6,7 @@ import "./PopupCardDelete.css";
 import "./PopupPhotoUpdate.css";
 import "./Add-popup.css";
 
-function PopupWithForm({ name, title, isOpen, onClose, children }) {
+function PopupWithForm({ name, title, isOpen, onClose, onSubmit, children }) {
   return (
     <div className={"popup"}>
       <div className={`popup__image-fade ${isOpen ? "active" : ""}`}></div>
@@ -15,7 +15,7 @@ function PopupWithForm({ name, title, isOpen, onClose, children }) {
           <img src={closeButton} className="popup__close-image" alt="close" />
         </span>
         <h2 className="popup__title">{title}</h2>
-        <form className="popup__form">
+        <form className="popup__form" onSubmit={onSubmit}>
           {children}
 
           <button className="popup__submit-button" type="submit">

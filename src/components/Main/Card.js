@@ -4,7 +4,7 @@ import bucketButton from "../../images/trash.png";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { CardContextRender } from "../../contexts/CardContextRender";
 
-function Card({ card, onCardClick }) {
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const { currentUser } = React.useContext(CurrentUserContext);
   const cardContextRender = React.useContext(CardContextRender);
   const isOwn = card.owner._id === currentUser._id;
@@ -19,8 +19,16 @@ function Card({ card, onCardClick }) {
     isLiked ? "templates__card-button-active" : "templates__card-button"
   }`;
   const likesCount = card && card.likes ? card.likes.length : 0;
+
   const handleClick = () => {
     onCardClick(card);
+  };
+
+  const handleLikeClick = () => {
+    onCardLike(card);
+  };
+  const handleCardDelete = () => {
+    onCardDelete(card);
   };
   return (
     <div className="templates__card">
@@ -31,11 +39,18 @@ function Card({ card, onCardClick }) {
         onClick={handleClick}
       />
       <button className={cardDeleteButtonClassName}>
-        <img src={bucketButton} alt="trash bucket image" />
+        <img
+          src={bucketButton}
+          onClick={handleCardDelete}
+          alt="trash bucket image"
+        />
       </button>
       <div className="templates__card__description-container">
         <h2 className="templates__card__description">{card.name}</h2>
-        <button className={cardLikeButtonClassName}></button>
+        <button
+          className={cardLikeButtonClassName}
+          onClick={handleLikeClick}
+        ></button>
         <p className="templates__card-likes-count">{likesCount}</p>
       </div>
     </div>

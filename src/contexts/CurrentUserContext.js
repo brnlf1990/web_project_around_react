@@ -20,7 +20,6 @@ export const CurrentUserProvider = ({ children }) => {
     () => ({ currentUser, setCurrentUser }),
     [currentUser, setCurrentUser]
   );
-  console.log(currentUser);
   return (
     <CurrentUserContext.Provider value={memoHook}>
       {children}

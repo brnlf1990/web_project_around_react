@@ -7,6 +7,7 @@ import cardAddButton from "../../images/add__button_icon.jpg";
 import Card from "./Card";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { CardContextRender } from "../../contexts/CardContextRender";
+import api from "../../utils/api";
 function Main({
   onEditProfileClick,
   onAddPlaceClick,
@@ -14,7 +15,36 @@ function Main({
   onCardClick,
 }) {
   const { currentUser } = React.useContext(CurrentUserContext);
-  const { cards } = React.useContext(CardContextRender);
+  const { cards, setInitialCards } = React.useContext(CardContextRender);
+
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setInitialCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const handleCardDelete = (card) => {
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        setInitialCards((prevCards) =>
+          prevCards.filter((c) => c._id !== card._id)
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return (
     <main className="content">
       <section className="profile">
@@ -55,7 +85,13 @@ function Main({
       </section>
       <section className="templates">
         {cards.map((card, index) => (
-          <Card key={index} card={card} onCardClick={() => onCardClick(card)} />
+          <Card
+            key={index}
+            card={card}
+            onCardLike={() => handleCardLike(card)}
+            onCardClick={() => onCardClick(card)}
+            onCardDelete={() => handleCardDelete(card)}
+          />
         ))}
       </section>
     </main>
