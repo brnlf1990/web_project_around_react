@@ -1,7 +1,7 @@
 import React from "react";
 
-import "./Header.css";
-import aroundImage from "../../images/header_title.jpg";
+import "../blocks/Header.css";
+import aroundImage from "../images/header_title.jpg";
 
 function Header() {
   return (

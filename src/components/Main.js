@@ -1,10 +1,10 @@
 import React from "react";
-import "./Profile.css";
-import "./Cards.css";
-import profileEditButton from "../../images/avatarPencil.png";
-import cardAddButton from "../../images/add__button_icon.jpg";
+import "../blocks/Profile.css";
+import "../blocks/Cards.css";
+import profileEditButton from "../images/avatarPencil.png";
+import cardAddButton from "../images/add__button_icon.jpg";
 import Card from "./Card";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function Main({
   onEditProfileClick,
   onAddPlaceClick,

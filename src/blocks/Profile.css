@@ -87,7 +87,7 @@
   opacity: 0.6;
 }
 .profile__avatar:hover {
-  background-image: url("../../images/avatarPencil.png");
+  background-image: url("../images/avatarPencil.png");
   background-repeat: no-repeat;
   align-self: center;
   background-position: center;

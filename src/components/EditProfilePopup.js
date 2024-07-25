@@ -1,7 +1,7 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import api from "../../utils/api";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import api from "../utils/api";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const { currentUser } = React.useContext(CurrentUserContext);
   const [name, setName] = React.useState("");

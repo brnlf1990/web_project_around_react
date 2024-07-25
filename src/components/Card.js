@@ -1,8 +1,8 @@
 import React from "react";
-import "./Cards.css";
-import bucketButton from "../../images/trash.png";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { CardContextRender } from "../../contexts/CardContextRender";
+import "../blocks/Cards.css";
+import bucketButton from "../images/trash.png";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { CardContextRender } from "../contexts/CardContextRender";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const { currentUser } = React.useContext(CurrentUserContext);

@@ -1,10 +1,10 @@
 import React from "react";
-import closeButton from "../../images/Close_Icon.png";
+import closeButton from "../images/Close_Icon.png";
 
-import "./Popup.css";
-import "./PopupCardDelete.css";
-import "./PopupPhotoUpdate.css";
-import "./Add-popup.css";
+import "../blocks/Popup.css";
+import "../blocks/PopupCardDelete.css";
+import "../blocks/PopupPhotoUpdate.css";
+import "../blocks/Add-popup.css";
 
 function PopupWithForm({ name, title, isOpen, onClose, onSubmit, children }) {
   return (

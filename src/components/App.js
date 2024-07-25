@@ -1,17 +1,16 @@
 import React from "react";
-import "./App.css";
-import Header from "./components/Header/Header";
-import Main from "./components/Main/Main";
-import Footer from "./components/Footer/Footer";
-import api from "../src/utils/api";
-import PopupWithForm from "./components/Main/PopupWithForm";
-import ImagePopup from "./components/Main/ImagePopup";
-import { CurrentUserContext } from "./contexts/CurrentUserContext";
-import EditProfilePopup from "./components/Main/EditProfilePopup";
-import EditAvatarPopup from "./components/Main/EditAvatarPopup";
-import { CardContextRender } from "./contexts/CardContextRender";
-import AddPlacePopup from "./components/Main/AddPlacePopup";
-import DeleteConfirmation from "./components/Main/DeleteConfirmationPopup";
+import "../blocks/Pages.css";
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
+import api from "../utils/api";
+import ImagePopup from "./ImagePopup";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
+import { CardContextRender } from "../contexts/CardContextRender";
+import AddPlacePopup from "./AddPlacePopup";
+import DeleteConfirmation from "./DeleteConfirmationPopup";
 
 //#########################################################
 function App() {
