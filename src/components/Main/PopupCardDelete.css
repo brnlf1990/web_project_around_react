@@ -23,6 +23,7 @@
   width: 430px;
   z-index: 10;
   justify-content: center;
+  flex-direction: column;
 }
 
 .card-delete__close-button {

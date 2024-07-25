@@ -42,6 +42,10 @@ function AddPlacePopup({ onClose, isOpen, onAddPlaceSubmit }) {
         required
       />
       <span className="popup__link-insert-error"></span>
+
+      <button className="popup__submit-button" type="submit">
+        Salvar
+      </button>
     </PopupWithForm>
   );
 }

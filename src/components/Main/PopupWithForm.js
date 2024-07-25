@@ -17,10 +17,6 @@ function PopupWithForm({ name, title, isOpen, onClose, onSubmit, children }) {
         <h2 className="popup__title">{title}</h2>
         <form className="popup__form" onSubmit={onSubmit}>
           {children}
-
-          <button className="popup__submit-button" type="submit">
-            Salvar
-          </button>
         </form>
       </div>
     </div>
