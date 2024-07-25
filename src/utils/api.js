@@ -1,4 +1,5 @@
 import { Promise } from "core-js";
+
 export class Api {
   constructor({ baseUrl, headers }, popupElements) {
     this._baseUrl = baseUrl;
@@ -83,6 +84,23 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatar,
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  postNewCard({ name, link }) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        link: link,
       }),
     }).then((res) => {
       if (res.ok) {

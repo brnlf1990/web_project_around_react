@@ -1,50 +1,20 @@
 import React from "react";
 import "./Profile.css";
 import "./Cards.css";
-import PopupWithForm from "./PopupWithForm";
 import profileEditButton from "../../images/avatarPencil.png";
 import cardAddButton from "../../images/add__button_icon.jpg";
 import Card from "./Card";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { CardContextRender } from "../../contexts/CardContextRender";
-import api from "../../utils/api";
 function Main({
   onEditProfileClick,
   onAddPlaceClick,
   onEditAvatarClick,
   onCardClick,
+  cards,
+  onCardLike,
+  onCardDelete,
 }) {
   const { currentUser } = React.useContext(CurrentUserContext);
-  const { cards, setInitialCards } = React.useContext(CardContextRender);
-
-  const handleCardLike = (card) => {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
-    api
-      .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setInitialCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
-  const handleCardDelete = (card) => {
-    api
-      .deleteCard(card._id)
-      .then(() => {
-        setInitialCards((prevCards) =>
-          prevCards.filter((c) => c._id !== card._id)
-        );
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
   return (
     <main className="content">
       <section className="profile">
@@ -88,9 +58,9 @@ function Main({
           <Card
             key={index}
             card={card}
-            onCardLike={() => handleCardLike(card)}
+            onCardLike={() => onCardLike(card)}
             onCardClick={() => onCardClick(card)}
-            onCardDelete={() => handleCardDelete(card)}
+            onCardDelete={() => onCardDelete(card)}
           />
         ))}
       </section>

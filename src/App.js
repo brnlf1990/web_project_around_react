@@ -9,7 +9,11 @@ import ImagePopup from "./components/Main/ImagePopup";
 import { CurrentUserContext } from "./contexts/CurrentUserContext";
 import EditProfilePopup from "./components/Main/EditProfilePopup";
 import EditAvatarPopup from "./components/Main/EditAvatarPopup";
+import { CardContextRender } from "./contexts/CardContextRender";
+import AddPlacePopup from "./components/Main/AddPlacePopup";
+import DeleteConfirmation from "./components/Main/DeleteConfirmationPopup";
 
+//#########################################################
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
@@ -18,7 +22,39 @@ function App() {
     React.useState(false);
   const { currentUser, setCurrentUser } = React.useContext(CurrentUserContext);
   const [selectedCard, setSelectedCard] = React.useState(null);
+  //#########################################################
 
+  const { cards, setInitialCards } = React.useContext(CardContextRender);
+
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setInitialCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const handleCardDelete = (card) => {
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        setInitialCards((prevCards) =>
+          prevCards.filter((c) => c._id !== card._id)
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  //#########################################################
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
   };
@@ -35,7 +71,6 @@ function App() {
     setSelectedCard(card);
   };
 
-  // Manipulador de evento para fechar os pop-ups
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -48,7 +83,7 @@ function App() {
       .patchUserInfo({ name, about })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
-        setIsEditProfilePopupOpen(false); // Fecha o popup após a atualização
+        setIsEditProfilePopupOpen(false);
       })
       .catch((error) => {
         console.error("Error updating user:", error);
@@ -62,6 +97,13 @@ function App() {
     });
   };
 
+  const handleAddPlaceSubmit = ({ name, link }) => {
+    api.postNewCard({ name, link }).then((newCard) => {
+      setInitialCards([newCard, ...cards]);
+      setIsAddPlacePopupOpen(false);
+    });
+  };
+  //#########################################################
   return (
     <div className="App">
       <div className="page">
@@ -71,6 +113,9 @@ function App() {
           onAddPlaceClick={handleAddPlaceClick}
           onEditAvatarClick={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
         <EditProfilePopup
@@ -80,34 +125,11 @@ function App() {
         />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
-
-        <PopupWithForm
-          name="add-popup__container"
-          title="Novo local"
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input
-            type="text"
-            name="title"
-            placeholder="Título"
-            className="popup__form-input add-popup__form-input"
-            id="popup__card-title-insert"
-            minLength="2"
-            maxLength="30"
-            required
-          />
-          <span className="popup__card-title-insert-error"></span>
-          <input
-            type="url"
-            name="image"
-            placeholder="Link da imagem"
-            className="popup__form-input add-popup__form-input"
-            id="popup__link-insert"
-            required
-          />
-          <span className="popup__link-insert-error"></span>
-        </PopupWithForm>
+          onclose={closeAllPopups}
+          onAddPlaceSubmit={handleAddPlaceSubmit}
+        ></AddPlacePopup>
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}

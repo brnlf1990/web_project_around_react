@@ -5,6 +5,7 @@ import PopupWithForm from "./PopupWithForm";
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   const { currentUser } = React.useContext(CurrentUserContext);
   const avatarRef = React.useRef(null);
+
   React.useEffect(() => {
     avatarRef.current.value = currentUser.avatar;
   }, [currentUser]);
@@ -14,6 +15,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       avatar: avatarRef.current.value,
     });
   }
+
   return (
     <PopupWithForm
       name="photo-update-popup__container"
