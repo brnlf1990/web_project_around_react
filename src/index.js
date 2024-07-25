@@ -9,11 +9,9 @@ import { CardRenderProvider } from "./contexts/CardContextRender";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <CurrentUserProvider>
-      <CardRenderProvider>
-        <App />
-      </CardRenderProvider>
-    </CurrentUserProvider>
+    <CardRenderProvider>
+      <App />
+    </CardRenderProvider>
   </React.StrictMode>
 );
 

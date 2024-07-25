@@ -3,12 +3,15 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
-  const { currentUser } = React.useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext);
   const avatarRef = React.useRef(null);
 
   React.useEffect(() => {
-    avatarRef.current.value = currentUser.avatar;
+    if (currentUser && avatarRef.current) {
+      avatarRef.current.value = currentUser.avatar || ""; // Garante que não seja undefined
+    }
   }, [currentUser]);
+
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateAvatar({

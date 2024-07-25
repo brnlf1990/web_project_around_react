@@ -1,11 +1,18 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
-  const { currentUser } = React.useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext);
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
+
+  React.useEffect(() => {
+    if (currentUser) {
+      setName(currentUser.name || "");
+      setDescription(currentUser.about || "");
+    }
+  }, [currentUser]);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -14,10 +21,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
-  React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-  }, [currentUser]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     onUpdateUser({
@@ -42,6 +46,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         id="popup__name-insert"
         minLength="2"
         maxLength="40"
+        value={name}
         onChange={handleNameChange}
         required
       />
@@ -54,12 +59,11 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         id="popup__aboutMe-insert"
         minLength="2"
         maxLength="200"
+        value={description}
         onChange={handleDescriptionChange}
         required
       />
-
       <span className="popup__aboutMe-insert-error"></span>
-
       <button className="popup__submit-button" type="submit">
         Salvar
       </button>
