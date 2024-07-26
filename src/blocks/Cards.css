@@ -40,7 +40,7 @@
     "description like-button"
     ". like-count";
   grid-template-columns: 83% 7%;
-  grid-template-rows: 146% 0%;
+  grid-template-rows: 129% 0%;
   grid-column-gap: 10px;
   align-items: end;
   justify-items: center;
@@ -210,5 +210,18 @@
     width: 40px;
     height: 40px;
     cursor: pointer;
+  }
+
+  .templates__card__description-container {
+    display: grid;
+    grid-template-areas:
+      "description like-button"
+      ". like-count";
+    grid-template-columns: 81% 9%;
+    grid-template-rows: 116% 0%;
+
+    grid-column-gap: 10px;
+    /* justify-items: center; */
+    align-content: center;
   }
 }

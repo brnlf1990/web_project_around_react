@@ -115,8 +115,9 @@
     display: flex;
     grid-area: 2 / 2 / 2 / 2;
     flex-direction: column;
-    width: 282px;
-    align-items: center;
+    width: 143px;
+    align-items: flex-end;
+    flex-wrap: nowrap;
   }
 
   .profile__info-name {
@@ -124,9 +125,11 @@
     font-weight: 500;
     font-size: 22px;
     line-height: 114%;
+    width: 87%;
     padding-left: 42px;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .profile__info-content {
@@ -135,8 +138,10 @@
     font-weight: 400;
     font-size: 18px;
     line-height: 100%;
+    width: 87%;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .profile__info-edit-button {
