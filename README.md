@@ -7,7 +7,7 @@ Esse projeto foi refatorado em React, foi feito em uma abordagem mais Declarativ
 Com isso e deixando o DOM no lugar mais alto, podemos acessar enviando como {prop} ou diretamente assinando com useContext. Tive problemas no entendimento de distribuição da {props} para outros componentes, mas consegui entender o funcionamento quando precisei fazer com que os botões efetuem suas funções. Onde quando passava as {props} nos componentes pensei que estava passando argumentos e nao colocava {}(chaves) para entende-los como props. Todas as Classes de JS fora refatorados para Hooks, onde a sintaxe ficou melhor e mais legivel.
 
 
-# Foi criado com Create React App
+## Foi criado com Create React App
 
 Este projeto foi criado como bootstrapped com [Create React App](https://github.com/facebook/create-react-app).
 
